@@ -1,3 +1,5 @@
+import EmailIcon from "@mui/icons-material/Email";
+
 import React, { useState } from "react";
 import {
   Button,
@@ -34,6 +36,7 @@ const ContactUs = () => {
     email: "",
     phone: "",
     address: "",
+    feedback: "",
     photo: null,
   });
 
@@ -51,7 +54,7 @@ const ContactUs = () => {
     reader.onloadend = () => {
       setFormData((prevData) => ({
         ...prevData,
-        photo: reader.result, // Store base64 string in formData
+        photo: reader.result,
       }));
     };
     if (file) {
@@ -87,6 +90,7 @@ const ContactUs = () => {
       email: formData.email,
       phone: formData.phone,
       address: formData.address,
+      feedback: formData.feedback,
       photo: formData.photo,
     };
 
@@ -99,6 +103,7 @@ const ContactUs = () => {
       email: "",
       phone: "",
       address: "",
+      feedback: "",
       photo: null,
     });
 
@@ -116,108 +121,150 @@ const ContactUs = () => {
           you want to inquire about our services, leave feedback, or ask for
           support, we’ll get back to you as soon as possible!
         </Typography>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Name"
-                variant="outlined"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Phone Number"
-                variant="outlined"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Address"
-                variant="outlined"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                required
-              />
-            </Grid>
-
+        <Grid container spacing={2}>
+          {/* Left half: Image preview */}
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              {/* Email Section with Icon */}
+              <EmailIcon color="primary" sx={{ mr: 1 }} />{" "}
+              {/* Add the email icon with some margin */}
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                fontWeight="bold"
+              >
+                E-MAIL:{" "}
+                <Typography
+                  variant="body1"
+                  component="span"
+                  color="textPrimary"
+                  fontWeight="bold"
+                >
+                  support@cardekho.com
+                </Typography>
+              </Typography>
+            </Box>
             {formData.photo && (
               <Box
-                mt={2}
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
+                  height: "100%",
                 }}
               >
                 <img
                   src={formData.photo}
                   alt="Preview"
                   style={{
-                    maxWidth: "30%",
-                    height: "auto",
+                    maxWidth: "100%",
+                    maxHeight: "300px",
+                    objectFit: "contain",
                   }}
                 />
-                <Typography variant="body2" color="textSecondary" mt={1}>
-                  (Image Preview)
-                </Typography>
               </Box>
             )}
-            <Grid item xs={12}>
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<CloudUploadIcon />}
-                fullWidth
-              >
-                Upload Photo
-                <VisuallyHiddenInput
-                  type="file"
-                  accept=".jpg,.png"
-                  onChange={handleFileChange}
-                />
-              </Button>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                startIcon={<SendIcon />}
-                sx={{ mt: 2 }}
-              >
-                Submit
-              </Button>
-            </Grid>
           </Grid>
-        </form>
+
+          {/* Right half: Form */}
+          <Grid item xs={12} md={6}>
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                {/* Name and Email in one row */}
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Name"
+                    variant="outlined"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Email"
+                    variant="outlined"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Grid>
+
+                {/* Address and Phone in one row */}
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Address"
+                    variant="outlined"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="Phone Number"
+                    variant="outlined"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </Grid>
+
+                {/* Feedback TextArea */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Feedback"
+                    variant="outlined"
+                    name="feedback"
+                    multiline
+                    rows={4}
+                    value={formData.feedback}
+                    onChange={handleChange}
+                  />
+                </Grid>
+
+                {/* Buttons: Upload and Submit */}
+                <Grid item xs={6}>
+                  <Button
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                    fullWidth
+                  >
+                    Upload Photo
+                    <VisuallyHiddenInput
+                      type="file"
+                      accept=".jpg,.png"
+                      onChange={handleFileChange}
+                    />
+                  </Button>
+                </Grid>
+                <Grid item xs={6}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    startIcon={<SendIcon />}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );

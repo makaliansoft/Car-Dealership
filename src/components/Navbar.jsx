@@ -33,7 +33,7 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
             to="/newCars"
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
-            New Cars
+            New
           </NavLink>
         </li>
         <li>
