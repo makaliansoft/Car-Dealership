@@ -1,0 +1,66 @@
+.car-slider {
+  margin: 2rem 0;
+  text-align: left;
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center the content horizontally */
+}
+
+.slider-box {
+  border: 1px solid #ddd; /* Border around the slider */
+  border-radius: 8px; /* Rounded corners */
+  padding: 1rem; /* Padding inside the box */
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  width: 50%; /* Width of the slider box */
+  position: relative; /* Position for absolute positioning of the category label */
+}
+
+.slider-category {
+  position: absolute; /* Position it at the top left */
+  top: 1rem; /* Space from the top */
+  left: 1rem; /* Space from the left */
+  font-size: 1.5rem; /* Font size for the category */
+  font-weight: bold; /* Bold text */
+  color: #333; /* Text color */
+  background-color: #ffcd83; /* Background color matching the slider box */
+  padding: 0.2rem 0.5rem; /* Padding for better visibility */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 1rem; /* Ensure uniform spacing between cards */
+  padding: 1rem 0; /* Add padding for spacing, more space at the top */
+  scrollbar-width: thin; /* For Firefox */
+  width: 100%; /* Adjusted to take full width of the container */
+}
+
+.slider::-webkit-scrollbar {
+  height: 8px; /* Scrollbar height */
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: #ccc; /* Scrollbar color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+/* Adjusting the car-card styles for sliders */
+.car-card {
+  min-width: 200px; /* Minimum width for each car card */
+  flex: 0 0 auto; /* Prevent cards from shrinking */
+  background-color: #fff; /* Background for the car card */
+  border-radius: 4px; /* Rounded corners for the card */
+  padding: 1rem; /* Padding inside the card */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  transition: transform 0.2s; /* Add a transition for hover effect */
+}
+
+.car-card:hover {
+  transform: translateY(-2px); /* Lift the card on hover */
+}
+
+

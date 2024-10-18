@@ -1,0 +1,53 @@
+/* Home.css */
+.home {
+  padding: 2rem;
+  text-align: center;
+}
+
+.car-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.car-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  width: 200px;
+  border-radius: 8px;
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for effects */
+}
+
+.car-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Hover effects */
+.car-card:hover {
+  transform: scale(1.05); /* Slightly increase size */
+  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.5); /* Orange shadow */
+}
+
+/* Additional styling effects */
+.car-card h3 {
+  color: #333; /* Darker text color for contrast */
+  margin: 0.5rem 0; /* Adjust margin for better spacing */
+}
+
+.car-card p {
+  color: #555; /* Lighter text color for description */
+}
+
+.car-card p:first-child {
+  font-weight: bold; /* Make the price bold */
+}
+
+/* Optional: Add a subtle background change on hover */
+.car-card:hover {
+  background-color: #f0f0f0; /* Slight background color change */
+}
