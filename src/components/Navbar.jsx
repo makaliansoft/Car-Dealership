@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import logo from "../assets/1.svg";
@@ -6,18 +5,31 @@ import logo from "../assets/1.svg";
 const Navbar = ({ isAdmin, setIsAdmin }) => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
+      console.log("I am here ");
       setIsAdmin(false);
       localStorage.removeItem("isAdmin");
       navigate("/");
+    } else {
+      console.log("User cancelled logout");
     }
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
   };
   return (
     <div className="navbar">
       <div className="navbar-logo">
-        <img src={logo} alt="Logo" className="img-logo" />
+        <img
+          src={logo}
+          alt="Logo"
+          className="img-logo"
+          onClick={handleLogoClick}
+        />
       </div>
       <ul>
         <li>
@@ -33,7 +45,7 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
             to="/newCars"
             className={({ isActive }) => (isActive ? "active-link" : "")}
           >
-            New
+            Brands
           </NavLink>
         </li>
         <li>

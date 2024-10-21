@@ -1,6 +1,6 @@
 import EmailIcon from "@mui/icons-material/Email";
-
-import React, { useState } from "react";
+import SkeletonLoader from "../components/SkeletonLoader";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   TextField,
@@ -28,6 +28,8 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const ContactUs = () => {
+  const [loading, setLoading] = useState(true);
+
   const [userDetails, setUserDetails] = useState(
     JSON.parse(localStorage.getItem("userDetails")) || []
   );
@@ -39,6 +41,13 @@ const ContactUs = () => {
     feedback: "",
     photo: null,
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -113,6 +122,10 @@ const ContactUs = () => {
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
+        {loading ? (
+          <SkeletonLoader count={1} height={300} />
+        ) : (
+          <>
         <Typography variant="h4" component="h2" gutterBottom textAlign="center">
           Get in Touch with Us!
         </Typography>
@@ -265,6 +278,8 @@ const ContactUs = () => {
             </form>
           </Grid>
         </Grid>
+        </>
+      )}
       </Paper>
     </Container>
   );

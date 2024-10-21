@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const NewCars = () => {
   return (
-    <div>NewCars</div>
-  )
-}
+    <div>
+      <h1>Shop by Brand?</h1>
+    </div>
+  );
+};
 
-export default NewCars
+export default NewCars;

@@ -7,18 +7,23 @@ import carData from "../data/carData";
 import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import SkeletonLoader from "../components/SkeletonLoader";
 import "../styles/Home.css";
 
 const Home = () => {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let storedCars = loadFromLocalStorage("carData");
-    if (!storedCars) {
-      saveToLocalStorage("carData", carData);
-      storedCars = carData;
-    }
-    setCars(storedCars);
+    setTimeout(() => {
+      let storedCars = loadFromLocalStorage("carData");
+      if (!storedCars) {
+        saveToLocalStorage("carData", carData);
+        storedCars = carData;
+      }
+      setCars(storedCars);
+      setLoading(false);
+    }, 1000);
   }, []);
 
   const categories = [...new Set(cars.map((car) => car.category))];
@@ -39,11 +44,15 @@ const Home = () => {
         </Typography>
       </Box>
 
-      {categories.map((category) => (
-        <Box key={category} mb={4}>
-          <CarSlider cars={categorizedCars[category]} category={category} />
-        </Box>
-      ))}
+      {loading ? (
+        <SkeletonLoader count={3} height={200}/>
+      ) : (
+        categories.map((category) => (
+          <Box key={category} mb={4}>
+            <CarSlider cars={categorizedCars[category]} category={category} />
+          </Box>
+        ))
+      )}
     </Container>
   );
 };

@@ -1,61 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { loadFromLocalStorage } from "../utils/localStorageUtil";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Grid,
-  Container,
-} from "@mui/material";
+import SkeletonLoader from "../components/SkeletonLoader";
+import "../styles/Reports.css"; // Import the CSS file
 
 const Reports = () => {
+  const [loading, setLoading] = useState(true);
   const responses = loadFromLocalStorage("userDetails") || []; // Load user details from local storage
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <Container maxWidth="md:w-10" sx={{ mt: 5 }}>
+    <div className="reports-container">
       <h1>Reports</h1>
-      <Grid container spacing={2}>
-        {responses.map((user, index) => (
-          <Grid item xs={12} sm={6} key={index}>
-     
-            <Card
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                mb: 2,
-                width: "max-content", // Set width to max-content
-                minWidth: ""
-              }}
-            >
-              <CardMedia
-                component="img"
-                sx={{ width: 150, height: 150, marginLeft: 2 }} // Set dimensions for the image
-                image={user.photo}
-                alt={`${user.name}'s photo`}
-              />
-              <CardContent sx={{ flex: 1 }}>
-                <Typography variant="h6" noWrap>
-                  {user.name}
-                </Typography>
-                <Typography variant="body1" sx={{ wordWrap: "break-word" }}>
-                  Email: {user.email}
-                </Typography>
-                <Typography variant="body1" sx={{ wordWrap: "break-word" }}>
-                  Phone: {user.phone}
-                </Typography>
-                <Typography variant="body1" sx={{ wordWrap: "break-word" }}>
-                  Address: {user.address}
-                </Typography>
-                <Typography variant="body1" sx={{ wordWrap: "break-word" }}>
-                  Feedback: {user.feedback}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+      <div className="reports-grid">
+        {loading ? (
+          <SkeletonLoader count={responses.length} height={200} />
+        ) : (
+          <>
+            {responses.map((user, index) => (
+              <div className="report-card" key={index}>
+                <img
+                  className="report-card-image"
+                  src={user.photo}
+                  alt={`${user.name}'s photo`}
+                />
+                <div className="report-card-content">
+                  <h2 className="card-title">{user.name}</h2>
+                  <p className="card-info">Email: {user.email}</p>
+                  <p className="card-info">Phone: {user.phone}</p>
+                  <p className="card-info">Address: {user.address}</p>
+                  <p className="card-info">Feedback: {user.feedback}</p>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 

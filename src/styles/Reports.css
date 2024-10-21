@@ -1,0 +1,41 @@
+.reports-container {
+  margin-top: 20px; /* Adjust margin as needed */
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(300px, 1fr)
+  ); /* Responsive grid */
+  gap: 16px; /* Space between grid items */
+}
+
+.report-card {
+  border: 1px solid #ccc; /* Border for the card */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Ensure rounded corners apply */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center items */
+}
+
+.report-card-image {
+  width: 100%; /* Make image full width */
+  height: 200px; /* Set fixed height for the image */
+  object-fit: cover; /* Ensure the image covers the area */
+}
+
+.report-card-content {
+  padding: 16px; /* Space inside the card */
+}
+
+.card-title {
+  font-weight: bold; /* Make title bold */
+  margin: 8px 0; /* Space around the title */
+}
+
+.card-info {
+  margin: 4px 0; /* Space between info paragraphs */
+}
