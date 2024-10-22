@@ -1,32 +1,34 @@
 .car-slider {
   margin: 2rem 0;
   text-align: left;
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center the content horizontally */
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0; /* Add vertical padding */
+  background: #f7f7f7; /* Light background */
 }
 
 .slider-box {
-  border: 1px solid #ddd; /* Border around the slider */
-  border-radius: 8px; /* Rounded corners */
-  padding: 1rem; /* Padding inside the box */
-  background-color: #f9f9f9; /* Light background color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-  width: 50%; /* Width of the slider box */
-  position: relative; /* Position for absolute positioning of the category label */
+  border: 1px solid #ddd;
+  border-radius: 12px; /* More rounded corners */
+  padding: 1.5rem; /* Increase padding */
+  background-color: #fff; /* Slightly lighter background */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+  width: 60%; /* Adjust width for better spacing */
+  position: relative;
 }
 
 .slider-category {
-  position: absolute; /* Position it at the top left */
-  top: 1rem; /* Space from the top */
-  left: 1rem; /* Space from the left */
-  font-size: 1.5rem; /* Font size for the category */
-  font-weight: bold; /* Bold text */
-  color: #333; /* Text color */
-  background-color: #ffcd83; /* Background color matching the slider box */
-  padding: 0.2rem 0.5rem; /* Padding for better visibility */
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #ffcd83;
+  padding: 0.3rem 0.8rem; /* Add padding for better visibility */
   border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Larger shadow for depth */
   z-index: 1;
 }
 
@@ -48,19 +50,24 @@
   border-radius: 4px; /* Rounded corners */
 }
 
-/* Adjusting the car-card styles for sliders */
 .car-card {
-  min-width: 200px; /* Minimum width for each car card */
-  flex: 0 0 auto; /* Prevent cards from shrinking */
-  background-color: #fff; /* Background for the car card */
-  border-radius: 4px; /* Rounded corners for the card */
-  padding: 1rem; /* Padding inside the card */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-  transition: transform 0.2s; /* Add a transition for hover effect */
+  min-width: 270px; /* Slightly larger cards for balance */
+  flex: 0 0 auto;
+  background: linear-gradient(145deg, #ffffff, #e3e3e3); /* Subtle gradient */
+  border-radius: 12px; /* Match slider’s rounded corners */
+  padding: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Softer shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
 
 .car-card:hover {
-  transform: translateY(-2px); /* Lift the card on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Increase shadow depth */
 }
 
-
+.car-card img {
+  width: 100%;
+  height: 160px; /* Slightly taller for visual balance */
+  object-fit: cover;
+  border-radius: 8px; /* Slight rounding of images */
+}

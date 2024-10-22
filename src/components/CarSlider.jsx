@@ -16,7 +16,16 @@ const CarSlider = ({ cars, category }) => {
   };
 
   return (
-    <Box sx={{ position: "relative", overflow: "hidden" }}>
+    <Box
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "20px",
+        borderRadius: "12px", // Rounded edges
+        background: "linear-gradient(313deg, #f5f7fa, rgb(0, 0, 0, 0.04))", // Gradient background
+        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)", // Larger shadow for depth
+      }}
+    >
       <Box display="flex" alignItems="center" mb={2}>
         <Typography variant="h5" component="h2" sx={{ flexGrow: 1 }}>
           {category}
@@ -33,7 +42,7 @@ const CarSlider = ({ cars, category }) => {
         ref={sliderRef}
         sx={{
           display: "flex",
-          gap: 2,
+          gap: 3,
           overflowX: "auto",
           scrollBehavior: "smooth",
           pb: 2,
@@ -47,11 +56,12 @@ const CarSlider = ({ cars, category }) => {
             style={{
               textDecoration: "none",
               color: "inherit",
-              minWidth: "250px",
-              border: "1px solid #e0e0e0",
-              borderRadius: "8px",
+              minWidth: "270px",
+              borderRadius: "12px",
               padding: "16px",
-              backgroundColor: "#fafafa",
+              background: "linear-gradient(145deg, #ffffff, #e3e3e3)", // Light gradient for depth
+              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.04)", // Softer shadow
+              transition: "transform 0.3s, box-shadow 0.3s",
             }}
           >
             <img
@@ -59,12 +69,17 @@ const CarSlider = ({ cars, category }) => {
               alt={`${car.brand} ${car.model}`}
               style={{
                 width: "100%",
-                height: "150px",
+                height: "160px",
                 objectFit: "cover",
-                borderRadius: "4px",
+                borderRadius: "8px",
               }}
             />
-            <Typography variant="h6" component="h4" gutterBottom>
+            <Typography
+              variant="h6"
+              component="h4"
+              gutterBottom
+              sx={{ mt: 2, color: "#333", fontWeight: "bold" }}
+            >
               {car.brand} {car.model}
             </Typography>
             <Typography variant="body2" color="textSecondary">

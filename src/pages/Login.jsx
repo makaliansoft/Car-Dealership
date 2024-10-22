@@ -16,6 +16,7 @@ import {
   loadFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtil";
+import CryptoJS from "crypto-js";
 
 const Login = ({ setIsAdmin }) => {
   const [loading, setLoading] = useState(true);
@@ -27,13 +28,21 @@ const Login = ({ setIsAdmin }) => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  const secretKey = "1q2w3e4r5t@..-1q2w3e4r5t@";
 
   // Load saved credentials from local storage if they exist
   useEffect(() => {
     const savedCredentials = loadFromLocalStorage("savedCredentials");
     if (savedCredentials) {
       setUserName(savedCredentials.username);
-      setPassword(savedCredentials.password);
+
+      // Decrypt the saved password
+      const decryptedPassword = CryptoJS.AES.decrypt(
+        savedCredentials.password,
+        secretKey
+      ).toString(CryptoJS.enc.Utf8);
+
+      setPassword(decryptedPassword);
       setRememberMe(true);
     }
   }, []);
@@ -50,9 +59,15 @@ const Login = ({ setIsAdmin }) => {
 
       if (rememberMe) {
         // Save credentials as an object in local storage
+        const encryptedPassword = CryptoJS.AES.encrypt(
+          password,
+          secretKey
+        ).toString();
+
+        // Save credentials as an object in local storage
         saveToLocalStorage("savedCredentials", {
           username: userName,
-          password,
+          password: encryptedPassword, // Save encrypted password
         });
       } else {
         localStorage.removeItem("savedCredentials");
