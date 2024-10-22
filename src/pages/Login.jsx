@@ -6,11 +6,16 @@ import {
   Typography,
   Paper,
   Box,
-  Snackbar,
   Alert,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import "../styles/Login.css";
-import SkeletonLoader from "../components/SkeletonLoader";
+import LoginSkeleton from "../components/LoginSkeleton";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from "../utils/localStorageUtil";
 
 const Login = ({ setIsAdmin }) => {
   const [loading, setLoading] = useState(true);
@@ -19,8 +24,19 @@ const Login = ({ setIsAdmin }) => {
   const [attempts, setAttempts] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+
+  // Load saved credentials from local storage if they exist
+  useEffect(() => {
+    const savedCredentials = loadFromLocalStorage("savedCredentials");
+    if (savedCredentials) {
+      setUserName(savedCredentials.username);
+      setPassword(savedCredentials.password);
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -31,16 +47,28 @@ const Login = ({ setIsAdmin }) => {
     if (userName === adminUser && password === adminPass) {
       setIsAdmin(true);
       localStorage.setItem("isAdmin", "true");
+
+      if (rememberMe) {
+        // Save credentials as an object in local storage
+        saveToLocalStorage("savedCredentials", {
+          username: userName,
+          password,
+        });
+      } else {
+        localStorage.removeItem("savedCredentials");
+      }
+
       navigate("/");
     } else {
       setAttempts((prev) => prev + 1);
-      setUserName("");
-      setPassword("");
 
+      // Only reset the username or password based on which is incorrect
       if (userName !== adminUser) {
         setErrorMessage("Username is incorrect!");
+        setUserName(""); // Reset only the username
       } else if (password !== adminPass) {
         setErrorMessage("Password is incorrect!");
+        setPassword(""); // Reset only the password
       }
 
       setSnackbarOpen(true);
@@ -53,15 +81,15 @@ const Login = ({ setIsAdmin }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (attempts >= 3) {
-        const timer = setTimeout(() => {
-          navigate("/");
-        }, 2000);
-        return () => clearTimeout(timer);
+        navigate("/");
+      } else {
+        setLoading(false);
       }
-      setLoading(false);
     }, 1000);
+
+    return () => clearTimeout(timer);
   }, [attempts, navigate]);
 
   return (
@@ -74,7 +102,7 @@ const Login = ({ setIsAdmin }) => {
     >
       <Paper elevation={3} sx={{ padding: 4, maxWidth: 400, width: "100%" }}>
         {loading ? (
-          <SkeletonLoader count={1} height={200} />
+          <LoginSkeleton />
         ) : (
           <>
             <Typography variant="h5" gutterBottom align="center">
@@ -99,6 +127,16 @@ const Login = ({ setIsAdmin }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label="Remember Me"
               />
               <Button
                 type="submit"

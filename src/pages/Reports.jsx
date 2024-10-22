@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loadFromLocalStorage } from "../utils/localStorageUtil";
-import SkeletonLoader from "../components/SkeletonLoader";
 import "../styles/Reports.css"; // Import the CSS file
+import ReportSkeleton from "../components/ReportSkeleton";
 
 const Reports = () => {
   const [loading, setLoading] = useState(true);
@@ -16,10 +16,9 @@ const Reports = () => {
 
   return (
     <div className="reports-container">
-      <h1>Reports</h1>
       <div className="reports-grid">
         {loading ? (
-          <SkeletonLoader count={responses.length} height={200} />
+          <ReportSkeleton responses={responses}/>
         ) : (
           <>
             {responses.map((user, index) => (

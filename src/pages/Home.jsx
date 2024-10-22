@@ -7,8 +7,8 @@ import carData from "../data/carData";
 import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import SkeletonLoader from "../components/SkeletonLoader";
 import "../styles/Home.css";
+import HomeSkeleton from "../components/HomeSkeleton";
 
 const Home = () => {
   const [cars, setCars] = useState([]);
@@ -35,24 +35,30 @@ const Home = () => {
   return (
     <Container maxWidth="lg" sx={{ mt: 5 }}>
       <Box textAlign="center" mb={4}>
-        <DirectionsCarIcon sx={{ fontSize: 50, color: "primary.main" }} />
-        <Typography variant="h3" component="h1" gutterBottom>
-          Explore Different Cars
-        </Typography>
-        <Typography variant="body1" color="textSecondary">
-          Find your next car by browsing through our various categories.
-        </Typography>
+        {loading ? (
+          // Show HomeSkeleton while loading
+          <HomeSkeleton />
+        ) : (
+          // Show actual content when loading is false
+          <>
+            <DirectionsCarIcon sx={{ fontSize: 50, color: "primary.main" }} />
+            <Typography variant="h3" component="h1" gutterBottom>
+              Explore Different Cars
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              Find your next car by browsing through our various categories.
+            </Typography>
+          </>
+        )}
       </Box>
 
-      {loading ? (
-        <SkeletonLoader count={3} height={200}/>
-      ) : (
+      {!loading &&
+        // If not loading, show car categories
         categories.map((category) => (
           <Box key={category} mb={4}>
             <CarSlider cars={categorizedCars[category]} category={category} />
           </Box>
-        ))
-      )}
+        ))}
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SkeletonLoader from "../components/SkeletonLoader";
-
+import { Skeleton, Box } from "@mui/material";
+import AboutUsSkeleton from "../components/AboutUsSkeleton";
 const AboutUs = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -13,7 +13,7 @@ const AboutUs = () => {
   return (
     <div className="max-w-5xl mx-auto p-5 font-sans leading-relaxed text-gray-800">
       {loading ? (
-        <SkeletonLoader count={3} height={300} />
+        <AboutUsSkeleton />
       ) : (
         <>
           <section className="bg-[#fde2c7] p-8 text-center rounded-lg mb-5">
