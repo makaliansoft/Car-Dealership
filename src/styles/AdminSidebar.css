@@ -2,10 +2,10 @@
 
 .sidebar {
   position: fixed;
-  left: -250px;
+  left: -300px;
   top: 90px;
   height: 100%;
-  width: 250px;
+  width: 300px;
   background-color: #333;
   color: white;
   transition: left 0.3s ease;
@@ -20,7 +20,6 @@
   left: 0;
 }
 
-
 /* Toggle button styling */
 .toggle-button {
   position: fixed;
@@ -33,7 +32,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 2.8); /* Subtle shadow */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   width: 50px; /* Adjust button size */
   height: 50px;
@@ -45,7 +44,7 @@
 /* Hover effect */
 .toggle-button:hover {
   background-color: #ffa500; /* Light orange on hover */
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* Active or pressed state */
@@ -64,21 +63,21 @@
 .sidebar-nav a {
   display: block;
   padding: 15px 20px;
-  margin-bottom: 10px; /* Spacing between tabs */
   text-align: left;
   background-color: #444;
-  color: white;
   text-decoration: none;
   font-size: 18px;
   transition: background-color 0.3s ease;
 }
 
 .sidebar-nav a:hover {
-  background-color: #ffa500; /* Light orange background on hover */
+  color: aliceblue;
+  background-color: #ffa600; /* Light orange background on hover */
 }
 
 .active-link {
   font-weight: bold;
+  color: #ff7f50;
 }
 
 /* Enhanced Close (X) button */
@@ -95,4 +94,50 @@
 
 .close-button:hover {
   color: #ffa500; /* Hover effect for the X icon */
+}
+
+/* AdminSideBar.css */
+
+/* Dropdown button */
+.dropdown-button {
+  display: flex; /* Ensure the button is a flex container */
+  justify-content: space-between; /* Align text and icon */
+  align-items: center; /* Center the content vertically */
+  background-color: #444;
+  border: none;
+  color: white; /* Text color */
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+  padding: 15px 20px; /* Same padding as other links */
+  width: 100%; /* Full width */
+  transition: background-color 0.3s ease; /* Added transition for smooth hover */
+}
+
+/* Hover effect for dropdown button */
+.dropdown-button:hover {
+  color: aliceblue; /* Change text color on hover */
+  background-color: #ffa600; /* Light orange background on hover */
+}
+
+/* Dropdown content */
+.dropdown-content {
+  background-color: #444; /* Match sidebar color */
+  border-radius: 8px; /* Rounded edges */
+  margin-top: 5px; /* Space between button and dropdown */
+  margin-left: 20px; /* Shift the dropdown to the right */
+  padding: 5px 0; /* Padding around dropdown items */
+  position: relative; /* Needed for absolute positioning of items */
+}
+
+/* Dropdown links */
+.dropdown-content a {
+  display: block;
+  padding: 10px 20px; /* Spacing for dropdown items */
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s ease; /* Transition for smooth hover */
+}
+
+.dropdown-content a:hover {
+  background-color: #ffa500; /* Light orange background on hover */
 }

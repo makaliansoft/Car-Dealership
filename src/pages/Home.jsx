@@ -7,8 +7,19 @@ import carData from "../data/carData";
 import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import "../styles/Home.css";
+import Slider from "react-slick";
+import "../styles/Home.css"; // Import CSS file
 import HomeSkeleton from "../components/Skeleton/HomeSkeleton";
+import image1 from "../assets/wall1.jpg";
+import image2 from "../assets/wall2.jpg";
+import image3 from "../assets/wall3.jpg";
+
+// Array of images to be displayed in the carousel
+const sliderImages = [
+  { src: image1, alt: "Image 1" },
+  { src: image2, alt: "Image 2" },
+  { src: image3, alt: "Image 3" },
+];
 
 const Home = () => {
   const [cars, setCars] = useState([]);
@@ -32,34 +43,71 @@ const Home = () => {
     return acc;
   }, {});
 
-  return (
-    <Container maxWidth="lg" sx={{ mt: 5 }}>
-      <Box textAlign="center" mb={4}>
-        {loading ? (
-          // Show HomeSkeleton while loading
-          <HomeSkeleton />
-        ) : (
-          // Show actual content when loading is false
-          <>
-            <DirectionsCarIcon sx={{ fontSize: 50, color: "primary.main" }} />
-            <Typography variant="h3" component="h1" gutterBottom>
-              Explore Different Cars
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Find your next car by browsing through our various categories.
-            </Typography>
-          </>
-        )}
-      </Box>
+  // Slick slider settings
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+  };
 
-      {!loading &&
-        // If not loading, show car categories
-        categories.map((category) => (
-          <Box key={category} mb={4}>
-            <CarSlider cars={categorizedCars[category]} category={category} />
-          </Box>
-        ))}
-    </Container>
+  return (
+    <>
+      <div className="home-slider-wrapper">
+        {" "}
+        {/* Wrap slider and text in the same div */}
+        {/* Image Slider */}
+        <Box mb={4}>
+          <Slider {...sliderSettings}>
+            {sliderImages.map((image, index) => (
+              <div key={index}>
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="slider-image" // Apply CSS class
+                />
+              </div>
+            ))}
+          </Slider>
+        </Box>
+        {/* Text overlay */}
+        <Box className="slider-text-overlay" textAlign="center">
+          {loading ? (
+            <HomeSkeleton />
+          ) : (
+            <>
+              <Typography
+                variant="h3"
+                component="h1"
+                gutterBottom
+                className="fancy-heading"
+              >
+                Explore Luxury Like Never Before
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                className="fancy-subtext"
+              >
+                Find your next car by browsing through our various categories.
+              </Typography>
+            </>
+          )}
+        </Box>
+      </div>
+
+      <Container maxWidth="lg" sx={{ mt: 5 }}>
+        {!loading &&
+          categories.map((category) => (
+            <Box key={category} mb={4}>
+              <CarSlider cars={categorizedCars[category]} category={category} />
+            </Box>
+          ))}
+      </Container>
+    </>
   );
 };
 

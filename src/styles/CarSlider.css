@@ -71,3 +71,14 @@
   object-fit: cover;
   border-radius: 8px; /* Slight rounding of images */
 }
+
+/* CarSlider.css */
+.slider-container {
+  overflow-x: auto; /* Allow horizontal scrolling */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

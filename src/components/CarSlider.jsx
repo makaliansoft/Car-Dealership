@@ -21,9 +21,9 @@ const CarSlider = ({ cars, category }) => {
         position: "relative",
         overflow: "hidden",
         padding: "20px",
-        borderRadius: "12px", // Rounded edges
-        background: "linear-gradient(313deg, #f5f7fa, rgb(0, 0, 0, 0.04))", // Gradient background
-        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)", // Larger shadow for depth
+        borderRadius: "12px",
+        background: "linear-gradient(313deg, #f5f7fa, rgb(0, 0, 0, 0.04))",
+        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
       }}
     >
       <Box display="flex" alignItems="center" mb={2}>
@@ -40,10 +40,10 @@ const CarSlider = ({ cars, category }) => {
 
       <Box
         ref={sliderRef}
+        className="slider-container" // Add the class here
         sx={{
           display: "flex",
           gap: 3,
-          overflowX: "auto",
           scrollBehavior: "smooth",
           pb: 2,
         }}
@@ -59,8 +59,8 @@ const CarSlider = ({ cars, category }) => {
               minWidth: "270px",
               borderRadius: "12px",
               padding: "16px",
-              background: "linear-gradient(145deg, #ffffff, #e3e3e3)", // Light gradient for depth
-              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.04)", // Softer shadow
+              background: "linear-gradient(145deg, #ffffff, #e3e3e3)",
+              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.04)",
               transition: "transform 0.3s, box-shadow 0.3s",
             }}
           >
