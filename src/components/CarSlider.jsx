@@ -22,7 +22,7 @@ const CarSlider = ({ cars, category }) => {
         overflow: "hidden",
         padding: "20px",
         borderRadius: "12px",
-        background: "linear-gradient(313deg, #f5f7fa, rgb(0, 0, 0, 0.04))",
+        background: "linear-gradient(177deg, #ffffff69, rgb(0, 0, 0, 0.04))",
         boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
       }}
     >
@@ -40,7 +40,7 @@ const CarSlider = ({ cars, category }) => {
 
       <Box
         ref={sliderRef}
-        className="slider-container" // Add the class here
+        className="slider-container" 
         sx={{
           display: "flex",
           gap: 3,
@@ -53,16 +53,7 @@ const CarSlider = ({ cars, category }) => {
             key={car.id}
             to={`/car/${car.id}`}
             className="car-card"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              minWidth: "270px",
-              borderRadius: "12px",
-              padding: "16px",
-              background: "linear-gradient(145deg, #ffffff, #e3e3e3)",
-              boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.04)",
-              transition: "transform 0.3s, box-shadow 0.3s",
-            }}
+           
           >
             <img
               src={car.image}

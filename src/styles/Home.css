@@ -12,8 +12,12 @@
 }
 
 .car-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  min-width: 270px; /* Slightly larger cards for balance */
+  background: linear-gradient(
+    145deg,
+    rgba(0, 0, 0, 0.26),
+    rgba(227, 227, 227)
+  ); /* Subtle gradient */
   padding: 1rem;
   width: 200px;
   border-radius: 8px;
@@ -25,12 +29,13 @@
   width: 100%;
   height: auto;
   border-radius: 4px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
 /* Hover effects */
 .car-card:hover {
-  transform: scale(1.05); /* Slightly increase size */
-  box-shadow: 0 4px 20px rgba(255, 165, 0, 0.5); /* Orange shadow */
+  transform: scale(1.02); /* Slightly increase size */
 }
 
 /* Additional styling effects */
@@ -49,7 +54,7 @@
 
 /* Optional: Add a subtle background change on hover */
 .car-card:hover {
-  background-color: #f0f0f0; /* Slight background color change */
+  background-color: #817f7f; /* Slight background color change */
 }
 
 /* Home.css */
@@ -60,24 +65,42 @@
   object-fit: cover; /* Ensures the image covers the area without distortion */
 }
 
-/* Home.css */
-
 /* Wrapper for the slider and text overlay */
 .home-slider-wrapper {
   position: relative; /* Ensures the text can be positioned over the slider */
 }
 
-
 /* Text overlay styling */
 .slider-text-overlay {
   position: absolute;
-  top: 50%; /* Center the text vertically */
+  top: 20%; /* Center the text vertically */
   left: 50%; /* Center the text horizontally */
   transform: translate(-50%, -50%); /* Make sure text is perfectly centered */
   color: white; /* White text for better contrast */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Add shadow for readability */
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.9); /* Add shadow for readability */
   z-index: 1; /* Keep text above images */
   width: 100%; /* Ensure the text takes up full width */
+  padding: 1rem; /* Add some padding to the text for spacing */
+}
+
+/* Make the dots transparent */
+.slick-dots {
+  bottom: 10px; /* Adjust position as needed */
+}
+
+.slick-dots li button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: rgba(214, 214, 214, 0.5); /* Semi-transparent background */
+  border-radius: 50%; /* Make dots circular */
+  outline: none;
+  cursor: pointer;
+}
+
+.slick-dots li.slick-active button {
+  background: rgba(255, 165, 0, 0.8); /* Change active dot color */
 }
 
 /* Fancier heading font */
@@ -85,17 +108,21 @@
   font-family: "Playfair Display", serif; /* Elegant serif font */
   font-size: 3rem; /* Larger font size for heading */
   font-weight: bold;
+  color: white; /* Set heading color to white */
 }
 
 /* Subtext styling */
 .fancy-subtext {
   font-family: "Roboto", sans-serif; /* Clean sans-serif font for subtext */
   font-size: 1.2rem;
-  color: #f0f0f0; /* Lighter color for subtext */
+  color: white; /* Set subtext color to white */
 }
-
-/* Ensure the slider images stay underneath the text */
-.slick-slider {
+.background-section {
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  background-size: auto;
+  background-position: center;
+  padding: 50px 20px; /* Adjust as needed */
+  text-align: center;
   position: relative;
-  z-index: 0;
+  z-index: 1; /* Ensure text is above the background */
 }

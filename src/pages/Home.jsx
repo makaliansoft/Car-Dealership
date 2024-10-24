@@ -6,19 +6,20 @@ import {
 import carData from "../data/carData";
 import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Slider from "react-slick";
 import "../styles/Home.css"; // Import CSS file
 import HomeSkeleton from "../components/Skeleton/HomeSkeleton";
 import image1 from "../assets/wall1.jpg";
 import image2 from "../assets/wall2.jpg";
 import image3 from "../assets/wall3.jpg";
+import image5 from "../assets/wall5.jpg";
 
 // Array of images to be displayed in the carousel
 const sliderImages = [
   { src: image1, alt: "Image 1" },
   { src: image2, alt: "Image 2" },
   { src: image3, alt: "Image 3" },
+  { src: image5, alt: "Image 5" },
 ];
 
 const Home = () => {
@@ -51,62 +52,47 @@ const Home = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 300000,
   };
 
   return (
     <>
       <div className="home-slider-wrapper">
-        {" "}
-        {/* Wrap slider and text in the same div */}
-        {/* Image Slider */}
         <Box mb={4}>
           <Slider {...sliderSettings}>
             {sliderImages.map((image, index) => (
               <div key={index}>
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="slider-image" // Apply CSS class
-                />
+                <img src={image.src} alt={image.alt} className="slider-image" />
               </div>
             ))}
           </Slider>
         </Box>
-        {/* Text overlay */}
         <Box className="slider-text-overlay" textAlign="center">
-          {loading ? (
-            <HomeSkeleton />
-          ) : (
-            <>
-              <Typography
-                variant="h3"
-                component="h1"
-                gutterBottom
-                className="fancy-heading"
-              >
-                Explore Luxury Like Never Before
-              </Typography>
-              <Typography
-                variant="body1"
-                color="textSecondary"
-                className="fancy-subtext"
-              >
-                Find your next car by browsing through our various categories.
-              </Typography>
-            </>
-          )}
+          <>
+            <Typography variant="h3" component="h1" className="fancy-heading">
+              Explore Luxury Like Never Before
+            </Typography>
+            <Typography variant="body1" className="fancy-subtext">
+              Find your next car by browsing through our various categories.
+            </Typography>
+          </>
         </Box>
       </div>
 
-      <Container maxWidth="lg" sx={{ mt: 5 }}>
-        {!loading &&
-          categories.map((category) => (
-            <Box key={category} mb={4}>
-              <CarSlider cars={categorizedCars[category]} category={category} />
-            </Box>
-          ))}
-      </Container>
+      {/* Background Section */}
+      <Box className="background-section">
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+          {!loading &&
+            categories.map((category) => (
+              <Box key={category} mb={4}>
+                <CarSlider
+                  cars={categorizedCars[category]}
+                  category={category}
+                />
+              </Box>
+            ))}
+        </Container>
+      </Box>
     </>
   );
 };
