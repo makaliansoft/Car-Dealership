@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Skeleton, Box } from "@mui/material";
-import AboutUsSkeleton from "../components/AboutUsSkeleton";
+import AboutUsSkeleton from "../components/Skeleton/AboutUsSkeleton";
 const AboutUs = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {

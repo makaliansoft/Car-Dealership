@@ -11,7 +11,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import "../styles/Login.css";
-import LoginSkeleton from "../components/LoginSkeleton";
+import LoginSkeleton from "../components/Skeleton/LoginSkeleton";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
@@ -102,7 +102,7 @@ const Login = ({ setIsAdmin }) => {
       } else {
         setLoading(false);
       }
-    }, 1000);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [attempts, navigate]);

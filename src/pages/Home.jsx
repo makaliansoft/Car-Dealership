@@ -8,7 +8,7 @@ import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import "../styles/Home.css";
-import HomeSkeleton from "../components/HomeSkeleton";
+import HomeSkeleton from "../components/Skeleton/HomeSkeleton";
 
 const Home = () => {
   const [cars, setCars] = useState([]);

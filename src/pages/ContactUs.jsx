@@ -13,7 +13,7 @@ import { saveToLocalStorage } from "../utils/localStorageUtil";
 import SendIcon from "@mui/icons-material/Send";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import ContactUsSkeleton from "../components/ContactUsSkeleton";
+import ContactUsSkeleton from "../components/Skeleton/ContactUsSkeleton";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

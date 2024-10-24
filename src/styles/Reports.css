@@ -9,6 +9,7 @@
     minmax(300px, 1fr)
   ); /* Responsive grid */
   gap: 16px; /* Space between grid items */
+  margin-left: 50px;
 }
 
 .report-card {

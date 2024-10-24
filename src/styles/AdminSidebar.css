@@ -1,0 +1,98 @@
+/* AdminSideBar.css */
+
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 90px;
+  height: 100%;
+  width: 250px;
+  background-color: #333;
+  color: white;
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Stretch tabs to fill width */
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+
+/* Toggle button styling */
+.toggle-button {
+  position: fixed;
+  left: -10px;
+  top: 120px;
+  padding: 12px 20px;
+  background-color: #ff7f50; /* Coral color */
+  color: white;
+  font-size: 30px; /* Make the hamburger icon bigger */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 50px; /* Adjust button size */
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hover effect */
+.toggle-button:hover {
+  background-color: #ffa500; /* Light orange on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Active or pressed state */
+.toggle-button:active {
+  background-color: #ff4500; /* Darker coral when clicked */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar nav links */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px; /* Spacing from the top for better layout */
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 15px 20px;
+  margin-bottom: 10px; /* Spacing between tabs */
+  text-align: left;
+  background-color: #444;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+  background-color: #ffa500; /* Light orange background on hover */
+}
+
+.active-link {
+  font-weight: bold;
+}
+
+/* Enhanced Close (X) button */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px; /* Make the X icon bigger */
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #ffa500; /* Hover effect for the X icon */
+}

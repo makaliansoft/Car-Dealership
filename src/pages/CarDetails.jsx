@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { loadFromLocalStorage } from "../utils/localStorageUtil";
 import "../styles/CarDetails.css";
-import CarDetailsSkeleton from "../components/CarDetailsSkeleton";
+import CarDetailsSkeleton from "../components/Skeleton/CarDetailsSkeleton";
 
 const CarDetails = () => {
   const [loading, setLoading] = useState(true);

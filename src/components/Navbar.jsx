@@ -12,7 +12,7 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
       console.log("I am here ");
       setIsAdmin(false);
       localStorage.removeItem("isAdmin");
-      navigate("/");
+      navigate("/login");
     } else {
       console.log("User cancelled logout");
     }
@@ -67,22 +67,6 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
 
         {isAdmin ? (
           <>
-            <li>
-              <NavLink
-                to="/reports"
-                className={({ isActive }) => (isActive ? "active-link" : "")}
-              >
-                Reports
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/addCar"
-                className={({ isActive }) => (isActive ? "active-link" : "")}
-              >
-                Add Car
-              </NavLink>
-            </li>
             <li>
               <NavLink to="/" className="logout-link" onClick={handleLogout}>
                 Logout

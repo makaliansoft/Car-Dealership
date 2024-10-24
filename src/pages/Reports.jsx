@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loadFromLocalStorage } from "../utils/localStorageUtil";
 import "../styles/Reports.css"; // Import the CSS file
-import ReportSkeleton from "../components/ReportSkeleton";
+import ReportSkeleton from "../components/Skeleton/ReportSkeleton";
 
 const Reports = () => {
   const [loading, setLoading] = useState(true);

@@ -10,6 +10,7 @@ import AddCar from "../pages/AddCar";
 import Reports from "../pages/Reports";
 import CarDetails from "../pages/CarDetails";
 import NotFound from "../pages/NotFound";
+import AdminSidebar from "../components/AdminSideBar";
 
 const AppRouter = () => {
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -26,7 +27,12 @@ const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App isAdmin={isAdmin} setIsAdmin={setIsAdmin} />,
+      element: (
+        <div>
+          <App isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
+          {isAdmin && <AdminSidebar />}
+        </div>
+      ),
       children: [
         { path: "", element: <Home /> },
         { path: "contact", element: <ContactUs /> },
