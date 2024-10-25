@@ -2,10 +2,10 @@
 
 .sidebar {
   position: fixed;
-  left: -300px;
+  left: -250px;
   top: 90px;
   height: 100%;
-  width: 300px;
+  width: 250px;
   background-color: #333;
   color: white;
   transition: left 0.3s ease;

@@ -1,9 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IconButton, Typography, Box } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "../styles/CarSlider.css";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import the AOS styles
 
 const CarSlider = ({ cars, category }) => {
   const sliderRef = useRef(null); // Reference for the slider
@@ -15,12 +17,18 @@ const CarSlider = ({ cars, category }) => {
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1200, // Duration of the animation
+    });
+  }, [])
+
   return (
-    <Box
+    <Box data-aos = "zoom-in"
       sx={{
+        padding: "30px",
         position: "relative",
         overflow: "hidden",
-        padding: "20px",
         borderRadius: "12px",
         background: "linear-gradient(177deg, #ffffff69, rgb(0, 0, 0, 0.04))",
         boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
@@ -40,7 +48,7 @@ const CarSlider = ({ cars, category }) => {
 
       <Box
         ref={sliderRef}
-        className="slider-container" 
+        className="slider-container"
         sx={{
           display: "flex",
           gap: 3,
@@ -49,12 +57,7 @@ const CarSlider = ({ cars, category }) => {
         }}
       >
         {cars.map((car) => (
-          <Link
-            key={car.id}
-            to={`/car/${car.id}`}
-            className="car-card"
-           
-          >
+          <Link key={car.id} to={`/car/${car.id}`} className="car-card">
             <img
               src={car.image}
               alt={`${car.brand} ${car.model}`}

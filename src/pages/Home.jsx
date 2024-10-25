@@ -8,11 +8,12 @@ import CarSlider from "../components/CarSlider";
 import { Container, Typography, Box } from "@mui/material";
 import Slider from "react-slick";
 import "../styles/Home.css"; // Import CSS file
-import HomeSkeleton from "../components/Skeleton/HomeSkeleton";
 import image1 from "../assets/wall1.jpg";
 import image2 from "../assets/wall2.jpg";
 import image3 from "../assets/wall3.jpg";
 import image5 from "../assets/wall5.jpg";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import the AOS styles
 
 // Array of images to be displayed in the carousel
 const sliderImages = [
@@ -27,6 +28,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1200, // Duration of the animation
+    });
     setTimeout(() => {
       let storedCars = loadFromLocalStorage("carData");
       if (!storedCars) {
@@ -52,13 +56,13 @@ const Home = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 300000,
+    autoplaySpeed: 3000,
   };
 
   return (
     <>
-      <div className="home-slider-wrapper">
-        <Box mb={4}>
+      <div className="home-slider-wrapper" data-aos="fade-down">
+        <Box>
           <Slider {...sliderSettings}>
             {sliderImages.map((image, index) => (
               <div key={index}>
@@ -80,11 +84,14 @@ const Home = () => {
       </div>
 
       {/* Background Section */}
-      <Box className="background-section">
+      <Box
+        className="background-section"
+        data-aos="fade-up"
+      >
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           {!loading &&
             categories.map((category) => (
-              <Box key={category} mb={4}>
+              <Box key={category}>
                 <CarSlider
                   cars={categorizedCars[category]}
                   category={category}
