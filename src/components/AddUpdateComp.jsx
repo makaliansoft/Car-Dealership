@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import "../styles/AddCar.css"; // Update this path as necessary
 
-
 const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
   const {
     register,
@@ -40,6 +39,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
   const handleFormSubmit = (newData) => {
     newData.image = imageUrl; // Set the image URL to preview
     onSubmit(newData); // Call the onSubmit function passed as a prop
+    console.log("I awas here");
     reset(); // Reset the form
   };
 
@@ -71,7 +71,12 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
           <Grid container spacing={3}>
             {/* Brand and Model in one row */}
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" error={!!errors.brand} required>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                error={!!errors.brand}
+                required
+              >
                 <InputLabel>Brand</InputLabel>
                 <Select
                   {...register("brand", { required: true })}
@@ -96,7 +101,9 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="Volkswagen">Volkswagen</MenuItem>
                   <MenuItem value="Jeep">Jeep</MenuItem>
                 </Select>
-                {errors.brand && <FormHelperText>Brand is Required</FormHelperText>}
+                {errors.brand && (
+                  <FormHelperText>Brand is Required</FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
@@ -127,7 +134,12 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" error={!!errors.category} required>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                error={!!errors.category}
+                required
+              >
                 <InputLabel>Category</InputLabel>
                 <Select
                   {...register("category", { required: true })}
@@ -143,7 +155,9 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="Coupe">Coupe</MenuItem>
                   <MenuItem value="Crossover">Crossover</MenuItem>
                 </Select>
-                {errors.category && <FormHelperText>Category is Required</FormHelperText>}
+                {errors.category && (
+                  <FormHelperText>Category is Required</FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
@@ -161,7 +175,12 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" error={!!errors.type} required>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                error={!!errors.type}
+                required
+              >
                 <InputLabel>Type</InputLabel>
                 <Select
                   {...register("type", { required: true })}
@@ -175,13 +194,20 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="luxury">Luxury</MenuItem>
                   <MenuItem value="performance">Performance</MenuItem>
                 </Select>
-                {errors.type && <FormHelperText>Type is Required</FormHelperText>}
+                {errors.type && (
+                  <FormHelperText>Type is Required</FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
             {/* Fuel Type and Transmission Type in one row */}
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth variant="outlined" error={!!errors.fuelType} required>
+              <FormControl
+                fullWidth
+                variant="outlined"
+                error={!!errors.fuelType}
+                required
+              >
                 <InputLabel>Fuel Type</InputLabel>
                 <Select
                   {...register("fuelType", { required: true })}
@@ -195,12 +221,18 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="petrol">Petrol</MenuItem>
                   <MenuItem value="electric">Electric</MenuItem>
                 </Select>
-                {errors.fuelType && <FormHelperText>Fuel Type is Required</FormHelperText>}
+                {errors.fuelType && (
+                  <FormHelperText>Fuel Type is Required</FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControl margin="normal" error={!!errors.transmissionType} required>
+              <FormControl
+                margin="normal"
+                error={!!errors.transmissionType}
+                required
+              >
                 <FormControlLabel
                   control={
                     <Radio
