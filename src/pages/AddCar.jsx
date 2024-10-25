@@ -1,9 +1,25 @@
-import React from 'react'
+import React from "react";
+import AddUpdateComp from "../components/AddUpdateComp";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from "../utils/localStorageUtil";
 
 const AddCar = () => {
-  return (
-    <div><h1>Add New Car </h1></div>
-  )
-}
+  const handleAddCar = (data) => {
+    const newCarObj = { id: Date.now(), ...data };
+    const existingData = loadFromLocalStorage("carData");
+    console.log("Adding car:", newCarObj);
+    const updatedData = [newCarObj, ...existingData];
+    console.log(updatedData);
+    saveToLocalStorage("carData", updatedData);
+  };
 
-export default AddCar
+  return (
+    <div>
+      <AddUpdateComp onSubmit={handleAddCar} />
+    </div>
+  );
+};
+
+export default AddCar;

@@ -62,7 +62,7 @@ const AdminSidebar = () => {
                   Add New Car
                 </NavLink>
                 <NavLink
-                  to="/updateDeleteCar"
+                  to="/updateCar"
                   className={({ isActive }) => (isActive ? "active-link" : "")}
                 >
                   Update/Delete Car

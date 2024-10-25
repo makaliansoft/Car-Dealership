@@ -28,10 +28,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    AOS.init({
-      duration: 1200, // Duration of the animation
-    });
-    setTimeout(() => {
       let storedCars = loadFromLocalStorage("carData");
       if (!storedCars) {
         saveToLocalStorage("carData", carData);
@@ -39,7 +35,9 @@ const Home = () => {
       }
       setCars(storedCars);
       setLoading(false);
-    }, 1000);
+      AOS.init({
+        duration: 1200, // Duration of the animation
+      });
   }, []);
 
   const categories = [...new Set(cars.map((car) => car.category))];
@@ -52,7 +50,7 @@ const Home = () => {
   const sliderSettings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -84,10 +82,7 @@ const Home = () => {
       </div>
 
       {/* Background Section */}
-      <Box
-        className="background-section"
-        data-aos="fade-up"
-      >
+      <Box className="background-section" data-aos="fade-up">
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           {!loading &&
             categories.map((category) => (

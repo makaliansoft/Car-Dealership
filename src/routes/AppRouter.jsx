@@ -11,6 +11,7 @@ import Reports from "../pages/Reports";
 import CarDetails from "../pages/CarDetails";
 import NotFound from "../pages/NotFound";
 import AdminSidebar from "../components/AdminSideBar";
+import UpdateDelete from "../pages/UpdateDelete";
 
 const AppRouter = () => {
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -41,6 +42,7 @@ const AppRouter = () => {
         { path: "login", element: <Login setIsAdmin={setIsAdmin} /> },
         { path: "reports", element: isAdmin ? <Reports /> : <NotFound /> },
         { path: "addCar", element: isAdmin ? <AddCar /> : <NotFound /> },
+        { path: "updateCar", element: isAdmin ? <UpdateDelete /> : <NotFound /> },
         { path: "car/:carId", element: <CarDetails /> },
         { path: "*", element: <NotFound /> },
       ],

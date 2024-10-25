@@ -1,0 +1,21 @@
+/* UpdateDelete.css */
+.car-card-update {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure buttons are at the bottom */
+  height: 100%; /* Ensure all cards have the same height */
+  transition: transform 0.3s ease, box-shadow 0.2s;
+}
+.car-card-update:hover {
+  transform: scale(1.02);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  margin-top: 10px; /* Optional: Space above buttons */
+}
+
+.container {
+  padding: 20px; /* Optional: Padding for the container */
+}
