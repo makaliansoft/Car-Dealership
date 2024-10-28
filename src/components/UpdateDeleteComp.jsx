@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 // import "../styles/CarCardUpdate.css"; // Assuming you have a separate CSS file for the card
 
-const CarCardUpdate = ({ car, onUpdate, onDelete }) => {
+const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
   return (
     <Card className="car-card-update">
       <CardMedia
@@ -52,4 +52,4 @@ const CarCardUpdate = ({ car, onUpdate, onDelete }) => {
   );
 };
 
-export default CarCardUpdate;
+export default UpdateDeleteComp;

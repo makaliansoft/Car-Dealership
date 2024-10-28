@@ -1,6 +1,4 @@
-// AddUpdateComp.jsx
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import {
   Container,
   Paper,
@@ -19,28 +17,92 @@ import {
 import "../styles/AddCar.css"; // Update this path as necessary
 
 const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const [formData, setFormData] = useState({
+    brand: "",
+    model: "",
+    price: "",
+    category: "",
+    type: "",
+    fuelType: "",
+    transmissionType: "auto", // Default value for radio button
+    mileage: "",
+    rating: "",
+    image: "",
+  });
 
+  const [errors, setErrors] = useState({});
   const [imageUrl, setImageUrl] = useState("");
 
-  // If updating, set the form values based on the carToUpdate prop
+  // Set form values if updating, otherwise clear with default values
   useEffect(() => {
     if (carToUpdate) {
-      reset(carToUpdate); // Reset form fields with carToUpdate values
-      setImageUrl(carToUpdate.image); // Set the initial image URL
+      setFormData({ ...carToUpdate });
+      setImageUrl(carToUpdate.image || "");
+    } else {
+      setFormData({
+        brand: "",
+        model: "",
+        price: "",
+        category: "",
+        type: "",
+        fuelType: "",
+        transmissionType: "auto",
+        mileage: "",
+        rating: "",
+        image: "",
+      });
+      setImageUrl("");
     }
-  }, [carToUpdate, reset]);
+  }, [carToUpdate]);
 
-  const handleFormSubmit = (newData) => {
-    newData.image = imageUrl; // Set the image URL to preview
-    onSubmit(newData); // Call the onSubmit function passed as a prop
-    console.log("I awas here");
-    reset(); // Reset the form
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    if (name === "image") {
+      setImageUrl(value); // Set the image URL as the user types
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    for (const key in formData) {
+      if (!formData[key]) {
+        newErrors[key] = `${
+          key.charAt(0).toUpperCase() + key.slice(1)
+        } is required`;
+      }
+    }
+    if (formData.rating < 0 || formData.rating > 5) {
+      newErrors.rating = "Rating must be between 0 and 5";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission
+    if (validateForm()) {
+      onSubmit({ ...formData, image: imageUrl }); // Call the onSubmit function passed as a prop
+      // Reset the form
+      setFormData({
+        brand: "",
+        model: "",
+        price: "",
+        category: "",
+        type: "",
+        fuelType: "",
+        transmissionType: "auto",
+        mileage: "",
+        rating: "",
+        image: "",
+      });
+      setImageUrl("");
+      setErrors({});
+    }
   };
 
   return (
@@ -63,7 +125,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
           width: "100%",
         }}
       >
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <form onSubmit={handleFormSubmit}>
           <Typography variant="h4" align="center" gutterBottom>
             {carToUpdate ? "Update Car Details" : "Add New Car"}
           </Typography>
@@ -79,9 +141,10 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
               >
                 <InputLabel>Brand</InputLabel>
                 <Select
-                  {...register("brand", { required: true })}
+                  name="brand"
+                  value={formData.brand}
+                  onChange={handleChange}
                   label="Brand"
-                  defaultValue=""
                 >
                   <MenuItem value="">
                     <em>Select Brand</em>
@@ -102,7 +165,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="Jeep">Jeep</MenuItem>
                 </Select>
                 {errors.brand && (
-                  <FormHelperText>Brand is Required</FormHelperText>
+                  <FormHelperText>{errors.brand}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -112,9 +175,11 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 fullWidth
                 variant="outlined"
                 label="Model"
-                {...register("model", { required: true })}
+                name="model"
+                value={formData.model}
+                onChange={handleChange}
                 error={!!errors.model}
-                helperText={errors.model ? "Model is Required" : ""}
+                helperText={errors.model || ""}
                 required
               />
             </Grid>
@@ -126,9 +191,11 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 variant="outlined"
                 label="Price"
                 type="text"
-                {...register("price", { required: true })}
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
                 error={!!errors.price}
-                helperText={errors.price ? "Price is Required" : ""}
+                helperText={errors.price || ""}
                 required
               />
             </Grid>
@@ -142,9 +209,10 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
               >
                 <InputLabel>Category</InputLabel>
                 <Select
-                  {...register("category", { required: true })}
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
                   label="Category"
-                  defaultValue=""
                 >
                   <MenuItem value="">
                     <em>Select Category</em>
@@ -156,7 +224,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="Crossover">Crossover</MenuItem>
                 </Select>
                 {errors.category && (
-                  <FormHelperText>Category is Required</FormHelperText>
+                  <FormHelperText>{errors.category}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -167,9 +235,11 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 fullWidth
                 variant="outlined"
                 label="Mileage"
-                {...register("mileage", { required: true })}
+                name="mileage"
+                value={formData.mileage}
+                onChange={handleChange}
                 error={!!errors.mileage}
-                helperText={errors.mileage ? "Mileage is Required" : ""}
+                helperText={errors.mileage || ""}
                 required
               />
             </Grid>
@@ -183,9 +253,10 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
               >
                 <InputLabel>Type</InputLabel>
                 <Select
-                  {...register("type", { required: true })}
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
                   label="Type"
-                  defaultValue=""
                 >
                   <MenuItem value="">
                     <em>Select Type</em>
@@ -194,9 +265,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="luxury">Luxury</MenuItem>
                   <MenuItem value="performance">Performance</MenuItem>
                 </Select>
-                {errors.type && (
-                  <FormHelperText>Type is Required</FormHelperText>
-                )}
+                {errors.type && <FormHelperText>{errors.type}</FormHelperText>}
               </FormControl>
             </Grid>
 
@@ -210,9 +279,10 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
               >
                 <InputLabel>Fuel Type</InputLabel>
                 <Select
-                  {...register("fuelType", { required: true })}
+                  name="fuelType"
+                  value={formData.fuelType}
+                  onChange={handleChange}
                   label="Fuel Type"
-                  defaultValue=""
                 >
                   <MenuItem value="">
                     <em>Select Fuel Type</em>
@@ -222,7 +292,7 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                   <MenuItem value="electric">Electric</MenuItem>
                 </Select>
                 {errors.fuelType && (
-                  <FormHelperText>Fuel Type is Required</FormHelperText>
+                  <FormHelperText>{errors.fuelType}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -236,8 +306,10 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 <FormControlLabel
                   control={
                     <Radio
-                      {...register("transmissionType", { required: true })}
+                      name="transmissionType"
                       value="auto"
+                      checked={formData.transmissionType === "auto"}
+                      onChange={handleChange}
                     />
                   }
                   label="Automatic"
@@ -245,14 +317,16 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 <FormControlLabel
                   control={
                     <Radio
-                      {...register("transmissionType", { required: true })}
+                      name="transmissionType"
                       value="manual"
+                      checked={formData.transmissionType === "manual"}
+                      onChange={handleChange}
                     />
                   }
                   label="Manual"
                 />
                 {errors.transmissionType && (
-                  <FormHelperText>Transmission Type is required</FormHelperText>
+                  <FormHelperText>{errors.transmissionType}</FormHelperText>
                 )}
               </FormControl>
             </Grid>
@@ -264,16 +338,13 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 variant="outlined"
                 label="Rating"
                 type="number"
-                {...register("rating", {
-                  required: true,
-                  min: 0,
-                  max: 5,
-                  pattern: /^\d*(\.\d+)?$/, // Allows decimal values
-                })}
-                inputProps={{ step: "0.1" }}
+                name="rating"
+                value={formData.rating}
+                onChange={handleChange}
                 error={!!errors.rating}
-                helperText={errors.rating ? "Rating is required" : ""}
+                helperText={errors.rating || ""}
                 required
+                inputProps={{ min: 0, max: 5, step: "0.1" }} // For decimal input
               />
             </Grid>
 
@@ -283,10 +354,11 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
                 variant="outlined"
                 label="Image URL"
                 type="url"
-                {...register("image", { required: true })}
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
                 error={!!errors.image}
-                helperText={errors.image ? "Image URL is required" : ""}
-                onChange={(e) => setImageUrl(e.target.value)} // Set the image URL as the user types
+                helperText={errors.image || ""}
                 required
               />
             </Grid>
@@ -294,7 +366,13 @@ const AddUpdateComp = ({ carToUpdate, onSubmit }) => {
 
           {/* Preview image */}
           {imageUrl && (
-            <div style={{ marginTop: "20px", textAlign: "center" }}>
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <img
                 src={imageUrl}
                 alt="Car Preview"
