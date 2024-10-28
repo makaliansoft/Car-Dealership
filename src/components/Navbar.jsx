@@ -1,8 +1,17 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import logo from "../assets/1.svg";
+import Dropdown from "./Dropdown/Dropdown";
+import HomeSVG from "../assets/home.svg";
+import AboutSVG from "../assets/about.svg";
+import ContactSVG from "../assets/contact.svg";
 
 const Navbar = ({ isAdmin, setIsAdmin }) => {
+  const options = [
+    { label: "Home", value: "1", icon: HomeSVG, path: "/" },
+    { label: "About Us", value: "2", path: "/about", icon: AboutSVG },
+    { label: "Contact Us", value: "3", path: "/contact", icon: ContactSVG },
+  ];
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
@@ -30,6 +39,9 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
           className="img-logo"
           onClick={handleLogoClick}
         />
+      </div>
+      <div className="dropdown">
+        <Dropdown options={options} />
       </div>
       <ul>
         <li>

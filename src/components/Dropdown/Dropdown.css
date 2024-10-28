@@ -1,0 +1,57 @@
+/* Dropdown.css */
+.dropdown-container {
+  color: black;
+  position: relative;
+  display: inline-block;
+  width: max-content; /* Adjust width as needed */
+}
+
+.dropdown-toggle {
+  background-color: #ddd;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dropdown-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+
+.dropdown-menu {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.option-icon {
+  margin-right: 8px; /* Space between icon and label */
+}
+
+.dropdown-item:hover {
+  background-color: #f9c74f; /* or any highlight color of your choice */
+}

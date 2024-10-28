@@ -8,7 +8,9 @@ import {
   Button,
   TextField,
   Typography,
-} from "@mui/material";
+  Snackbar,
+  Alert,
+} from "@mui/material"; // Import Alert
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
@@ -22,6 +24,8 @@ const UpdateDelete = () => {
   const [open, setOpen] = useState(false);
   const [carToUpdate, setCarToUpdate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     const existingData = loadFromLocalStorage("carData") || [];
@@ -34,9 +38,17 @@ const UpdateDelete = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedCars = cars.filter((car) => car.id !== id);
-    setCars(updatedCars);
-    saveToLocalStorage("carData", updatedCars);
+    // Prompt user for confirmation
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this car?"
+    );
+    if (confirmed) {
+      const updatedCars = cars.filter((car) => car.id !== id);
+      setCars(updatedCars);
+      saveToLocalStorage("carData", updatedCars);
+      setSnackbarMessage("Car deleted successfully!");
+      setSnackbarOpen(true); // Open the Snackbar
+    }
   };
 
   const handleSubmitUpdate = (updatedCar) => {
@@ -47,6 +59,8 @@ const UpdateDelete = () => {
     saveToLocalStorage("carData", updatedCars);
     setOpen(false); // Close the modal after updating
     setCarToUpdate(null); // Clear the car to update
+    setSnackbarMessage("Car updated successfully!");
+    setSnackbarOpen(true); // Open the Snackbar
   };
 
   const handleClose = () => {
@@ -63,9 +77,14 @@ const UpdateDelete = () => {
     setSearchQuery(event.target.value);
   };
 
+  // Snackbar close handler
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
   return (
-    <Container maxWidth="lg" style={{padding: "20px"}}>
-      {/*Search Fieldd*/}
+    <Container maxWidth="lg" style={{ padding: "20px" }}>
+      {/* Search Field */}
       <TextField
         label="Search by Name or Company"
         variant="outlined"
@@ -110,6 +129,22 @@ const UpdateDelete = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Snackbar for success messages */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4500}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
