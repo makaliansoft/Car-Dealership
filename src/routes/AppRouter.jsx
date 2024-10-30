@@ -15,19 +15,16 @@ import Sidebar from "../components/SideBar/SideBar";
 
 const AppRouter = () => {
   const [isAdmin, setIsAdmin] = useState(() => {
-    // Retrieve the value from localStorage on initialization
     const savedIsAdmin = localStorage.getItem("isAdmin");
     return savedIsAdmin === "true"; // Convert to boolean
   });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Manage sidebar state
 
-  console.log(isAdmin);
   useEffect(() => {
     localStorage.setItem("isAdmin", isAdmin);
   }, [isAdmin]);
 
-  const sidebarLinks = [
-    { label: "Reports", path: "/reports" },
-  ];
+  const sidebarLinks = [{ label: "Reports", path: "/reports" }];
 
   const dropdowns = [
     {
@@ -36,7 +33,6 @@ const AppRouter = () => {
         { label: "Add Car", path: "/addCar", value: "addCar" },
         { label: "Update/Delete Car", path: "/updateCar", value: "updateCar" },
       ],
-      customMenuStyles: { marginTop: "5px", marginLeft: "20px" }, // Example custom styles
     },
   ];
 
@@ -47,14 +43,47 @@ const AppRouter = () => {
         <div>
           <App isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
           {isAdmin && (
-            <Sidebar
-              title="Admin Menu"
-              links={sidebarLinks}
-              dropdowns={dropdowns}
-              customStyles={{ backgroundColor: "#333", color: "white" }}
-              customToggleStyles={{ backgroundColor: "#6c6969", color: "white", width: "210px", padding: "15px 20px" }}
-              customCloseButtonStyles={{ color: "white" }}
-            />
+            <>
+              <Sidebar
+                title="Admin Menu"
+                links={sidebarLinks}
+                dropdowns={dropdowns}
+                customStyles={{ backgroundColor: "#333", color: "white" }}
+                customToggleStyles={{
+                  color: "white",
+                  width: "210px",
+                  padding: "12px 15px",
+                }}
+                customCloseButtonStyles={{ color: "white" }}
+                isOpen={isSidebarOpen} // Pass the sidebar open state
+                toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} // Function to toggle
+                closeSidebar={() => setIsSidebarOpen(false)} // Function to close
+              />
+              <button
+                className="toggle-button" // Toggle button to open/close sidebar
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                style={{
+                  position: "fixed",
+                  borderRadius: "10px",
+                  backgroundColor: "#ff8910", // Change to your desired color
+                  top: "150px",
+                  left: "-10px",
+                  zIndex: 500,
+                  transition: "background-color 0.3s, box-shadow 0.3s", // Smooth transition for hover effect
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.boxShadow =
+                    "0 4px 8px rgba(0, 0, 0, 0.5)"; // Add shadow on hover
+                  e.currentTarget.style.backgroundColor = "#ff7f50"; // Change color on hover
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.boxShadow = "none"; // Remove shadow when not hovered
+                  e.currentTarget.style.backgroundColor = "#ff8910"; // Reset to original color
+                }}
+              >
+                &#9776;
+              </button>
+            </>
           )}
         </div>
       ),

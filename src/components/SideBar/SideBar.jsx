@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 import Dropdown from "../Dropdown/Dropdown";
@@ -10,25 +10,24 @@ const Sidebar = ({
   customStyles,
   customToggleStyles,
   customCloseButtonStyles,
+  isOpen,
+  toggleSidebar,
+  closeSidebar, 
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef(null);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsOpen(false);
+        closeSidebar(); // Use closeSidebar from props
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [closeSidebar]);
 
   return (
     <div>
@@ -41,7 +40,7 @@ const Sidebar = ({
 
         <button
           className="close-button"
-          onClick={toggleSidebar}
+          onClick={closeSidebar} // Use closeSidebar to close
           style={customCloseButtonStyles}
         >
           &times;
@@ -76,7 +75,7 @@ const Sidebar = ({
 
       {!isOpen && (
         <button onClick={toggleSidebar} className="toggle-button">
-          &#9776;
+          Admin Menu
         </button>
       )}
     </div>

@@ -11,7 +11,6 @@
 }
 
 .dropdown-toggle {
-  background-color: var(--dropdown-toggle-bg);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,7 +34,6 @@
   top: 100%;
   left: 0;
   width: max-content;
-  background-color: var(--dropdown-menu-bg);
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
@@ -43,7 +41,6 @@
 
 .dropdown-item {
   margin-left: 39px;
-  background-color: #6c6969;
   padding: 10px;
   cursor: pointer;
   display: flex;

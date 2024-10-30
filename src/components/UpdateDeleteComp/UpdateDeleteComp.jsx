@@ -62,7 +62,7 @@ const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
           </Button>
         </div>
         {/* Sidebar Component inside the Card */}
-        {isSidebarOpen && (
+        {/* {isSidebarOpen && (
           <div className="sidebar-overlay">
             <Sidebar
               title={`${car.brand} ${car.model} Options`}
@@ -72,7 +72,7 @@ const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
               customToggleStyles={{ fontSize: "18px", color: "blue" }}
             />
           </div>
-        )}
+        )} */}
       </CardContent>
     </Card>
   );
