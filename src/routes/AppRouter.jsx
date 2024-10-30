@@ -10,8 +10,8 @@ import AddCar from "../pages/AddCar";
 import Reports from "../pages/Reports";
 import CarDetails from "../pages/CarDetails";
 import NotFound from "../pages/NotFound";
-import AdminSidebar from "../components/AdminSideBar";
 import UpdateDelete from "../pages/UpdateDelete";
+import Sidebar from "../components/SideBar/SideBar";
 
 const AppRouter = () => {
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -25,13 +25,37 @@ const AppRouter = () => {
     localStorage.setItem("isAdmin", isAdmin);
   }, [isAdmin]);
 
+  const sidebarLinks = [
+    { label: "Reports", path: "/reports" },
+  ];
+
+  const dropdowns = [
+    {
+      label: "Manage Cars",
+      options: [
+        { label: "Add Car", path: "/addCar", value: "addCar" },
+        { label: "Update/Delete Car", path: "/updateCar", value: "updateCar" },
+      ],
+      customMenuStyles: { marginTop: "5px", marginLeft: "20px" }, // Example custom styles
+    },
+  ];
+
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
         <div>
           <App isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
-          {isAdmin && <AdminSidebar />}
+          {isAdmin && (
+            <Sidebar
+              title="Admin Menu"
+              links={sidebarLinks}
+              dropdowns={dropdowns}
+              customStyles={{ backgroundColor: "#333", color: "white" }}
+              customToggleStyles={{ backgroundColor: "#6c6969", color: "white", width: "210px", padding: "15px 20px" }}
+              customCloseButtonStyles={{ color: "white" }}
+            />
+          )}
         </div>
       ),
       children: [
@@ -42,7 +66,10 @@ const AppRouter = () => {
         { path: "login", element: <Login setIsAdmin={setIsAdmin} /> },
         { path: "reports", element: isAdmin ? <Reports /> : <NotFound /> },
         { path: "addCar", element: isAdmin ? <AddCar /> : <NotFound /> },
-        { path: "updateCar", element: isAdmin ? <UpdateDelete /> : <NotFound /> },
+        {
+          path: "updateCar",
+          element: isAdmin ? <UpdateDelete /> : <NotFound />,
+        },
         { path: "car/:carId", element: <CarDetails /> },
         { path: "*", element: <NotFound /> },
       ],

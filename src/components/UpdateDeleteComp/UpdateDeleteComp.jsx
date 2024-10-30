@@ -1,5 +1,4 @@
-// CarCardUpdate.jsx
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,9 +6,21 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-// import "../styles/CarCardUpdate.css"; // Assuming you have a separate CSS file for the card
+import Sidebar from "../SideBar/SideBar";
+import "./UpdateDeleteComp.css"; // Import CSS to style the sidebar overlay within the card
 
 const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const sidebarOptions = [
+    { label: "Update", action: () => onUpdate(car) },
+    { label: "Delete", action: () => onDelete(car.id) },
+  ];
+
   return (
     <Card className="car-card-update">
       <CardMedia
@@ -46,7 +57,22 @@ const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
           >
             Delete
           </Button>
+          <Button variant="outlined" color="secondary" onClick={toggleSidebar}>
+            Open
+          </Button>
         </div>
+        {/* Sidebar Component inside the Card */}
+        {isSidebarOpen && (
+          <div className="sidebar-overlay">
+            <Sidebar
+              title={`${car.brand} ${car.model} Options`}
+              links={sidebarOptions}
+              customStyles={{ width: "250px", position: "absolute" }}
+              customCloseButtonStyles={{ fontSize: "24px", color: "red" }}
+              customToggleStyles={{ fontSize: "18px", color: "blue" }}
+            />
+          </div>
+        )}
       </CardContent>
     </Card>
   );

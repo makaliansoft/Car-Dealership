@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Dropdown.css"; // Make sure to import the CSS file
+import PropTypes from "prop-types";
+import "./Dropdown.css";
 import DownArrowSVG from "../../assets/down-arrow.svg";
 import { useNavigate } from "react-router-dom";
 
-const Dropdown = ({ options }) => {
+const Dropdown = ({
+  options,
+  placeholder = "Select a Page",
+  customToggleStyles = {},
+  customMenuStyles = {},
+  onSelect,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
@@ -16,7 +22,9 @@ const Dropdown = ({ options }) => {
     if (option.path) {
       navigate(option.path);
     }
-    setSelectedOption(option)
+    if (onSelect) {
+      onSelect(option);
+    }
   };
 
   useEffect(() => {
@@ -33,8 +41,12 @@ const Dropdown = ({ options }) => {
 
   return (
     <div className="dropdown-container" ref={dropdownRef}>
-      <button className="dropdown-toggle" onClick={handleToggle}>
-        {selectedOption ? selectedOption.label : "Select a Page"}
+      <button
+        className="dropdown-toggle"
+        onClick={handleToggle}
+        style={customToggleStyles}
+      >
+        {placeholder}
         <img
           src={DownArrowSVG}
           alt="Down Arrow SVG"
@@ -42,7 +54,7 @@ const Dropdown = ({ options }) => {
         />
       </button>
       {isOpen && (
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu" style={customMenuStyles}>
           {options.map((option) => (
             <li
               key={option.value}

@@ -40,9 +40,15 @@ const Navbar = ({ isAdmin, setIsAdmin }) => {
           onClick={handleLogoClick}
         />
       </div>
-      <div className="dropdown">
-        <Dropdown options={options} />
-      </div>
+      {/* Custom drop down component used here */}
+      {/* <div className="dropdown">
+        <Dropdown
+          options={options}
+          placeholder="Navigate"
+          customToggleStyles={{ color: "#181a19" }}
+          customMenuStyles={{ color: "#181a19" }}
+        />
+      </div> */}
       <ul>
         <li>
           <NavLink

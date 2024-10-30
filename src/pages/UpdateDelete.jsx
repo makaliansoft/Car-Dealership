@@ -15,7 +15,7 @@ import {
   loadFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtil";
-import UpdateDeleteComp from "../components/UpdateDeleteComp";
+import UpdateDeleteComp from "../components/UpdateDeleteComp/UpdateDeleteComp";
 import AddUpdateComp from "../components/AddUpdateComp"; // Import AddUpdateComp
 import "../styles/UpdateDelete.css"; // Import your styling file
 
