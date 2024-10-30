@@ -75,7 +75,7 @@ const Sidebar = ({
 
       {!isOpen && (
         <button onClick={toggleSidebar} className="toggle-button">
-          Admin Menu
+          Admin Menu &#9776; 
         </button>
       )}
     </div>

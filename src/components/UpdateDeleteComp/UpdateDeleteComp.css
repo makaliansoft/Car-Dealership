@@ -3,13 +3,20 @@
 }
 
 .sidebar-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
-  z-index: 10;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay */
+  bottom: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: -2px 0px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.button-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
 }

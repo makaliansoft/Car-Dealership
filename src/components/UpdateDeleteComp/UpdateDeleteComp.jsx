@@ -16,11 +16,6 @@ const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const sidebarOptions = [
-    { label: "Update", action: () => onUpdate(car) },
-    { label: "Delete", action: () => onDelete(car.id) },
-  ];
-
   return (
     <Card className="car-card-update">
       <CardMedia
@@ -61,17 +56,16 @@ const UpdateDeleteComp = ({ car, onUpdate, onDelete }) => {
             Open
           </Button>
         </div>
-        {/* Sidebar Component inside the Card */}
-        {/* {isSidebarOpen && (
-          <div className="sidebar-overlay">
-            <Sidebar
-              title={`${car.brand} ${car.model} Options`}
-              links={sidebarOptions}
-              customStyles={{ width: "250px", position: "absolute" }}
-              customCloseButtonStyles={{ fontSize: "24px", color: "red" }}
-              customToggleStyles={{ fontSize: "18px", color: "blue" }}
-            />
-          </div>
+        {/* Sidebar Component inside the Card
+        {isSidebarOpen && (
+          <Sidebar
+            title={`${car.brand} ${car.model} Details`}
+            isOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+            closeSidebar={() => setIsSidebarOpen(false)}
+            customStyles={{ backgroundColor :"black" }}
+            carDetails={car} // Pass the car object as a prop
+          />
         )} */}
       </CardContent>
     </Card>

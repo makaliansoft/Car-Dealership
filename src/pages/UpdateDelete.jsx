@@ -10,17 +10,19 @@ import {
   Typography,
   Snackbar,
   Alert,
-} from "@mui/material"; // Import Alert
+} from "@mui/material";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtil";
 import UpdateDeleteComp from "../components/UpdateDeleteComp/UpdateDeleteComp";
-import AddUpdateComp from "../components/AddUpdateComp"; // Import AddUpdateComp
-import "../styles/UpdateDelete.css"; // Import your styling file
+import AddUpdateComp from "../components/AddUpdateComp";
+import UpdateDeleteSkeleton from "../components/Skeleton/UpdateDeleteSkeleton";
+import "../styles/UpdateDelete.css";
 
 const UpdateDelete = () => {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const [open, setOpen] = useState(false);
   const [carToUpdate, setCarToUpdate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,15 +32,18 @@ const UpdateDelete = () => {
   useEffect(() => {
     const existingData = loadFromLocalStorage("carData") || [];
     setCars(existingData);
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false after data is loaded
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleUpdate = (car) => {
-    setCarToUpdate(car); // Set the car to update
-    setOpen(true); // Open the modal
+    setCarToUpdate(car);
+    setOpen(true);
   };
 
   const handleDelete = (id) => {
-    // Prompt user for confirmation
     const confirmed = window.confirm(
       "Are you sure you want to delete this car?"
     );
@@ -47,7 +52,7 @@ const UpdateDelete = () => {
       setCars(updatedCars);
       saveToLocalStorage("carData", updatedCars);
       setSnackbarMessage("Car deleted successfully!");
-      setSnackbarOpen(true); // Open the Snackbar
+      setSnackbarOpen(true);
     }
   };
 
@@ -57,15 +62,15 @@ const UpdateDelete = () => {
     );
     setCars(updatedCars);
     saveToLocalStorage("carData", updatedCars);
-    setOpen(false); // Close the modal after updating
-    setCarToUpdate(null); // Clear the car to update
+    setOpen(false);
+    setCarToUpdate(null);
     setSnackbarMessage("Car updated successfully!");
-    setSnackbarOpen(true); // Open the Snackbar
+    setSnackbarOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false); // Close the modal
-    setCarToUpdate(null); // Clear the car to update
+    setOpen(false);
+    setCarToUpdate(null);
   };
 
   const filteredCars = cars.filter((car) => {
@@ -77,7 +82,6 @@ const UpdateDelete = () => {
     setSearchQuery(event.target.value);
   };
 
-  // Snackbar close handler
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -101,16 +105,23 @@ const UpdateDelete = () => {
         </Typography>
       )}
 
+      {/* Grid to display car cards or skeletons */}
       <Grid container spacing={2}>
-        {filteredCars.map((car) => (
-          <Grid item xs={12} sm={6} md={3} key={car.id}>
-            <UpdateDeleteComp
-              car={car}
-              onUpdate={handleUpdate}
-              onDelete={handleDelete}
-            />
-          </Grid>
-        ))}
+        {loading
+          ? Array.from(new Array(8)).map((_, index) => (
+              <Grid item xs={12} sm={6} md={3} key={index}>
+                <UpdateDeleteSkeleton />
+              </Grid>
+            ))
+          : filteredCars.map((car) => (
+              <Grid item xs={12} sm={6} md={3} key={car.id}>
+                <UpdateDeleteComp
+                  car={car}
+                  onUpdate={handleUpdate}
+                  onDelete={handleDelete}
+                />
+              </Grid>
+            ))}
       </Grid>
 
       {/* Modal for updating car details */}
