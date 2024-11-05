@@ -11,18 +11,18 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import {
-  loadFromLocalStorage,
-  saveToLocalStorage,
-} from "../utils/localStorageUtil";
+import Sidebar from "../components/Sidebar/SideBar";
 import UpdateDeleteComp from "../components/UpdateDeleteComp/UpdateDeleteComp";
 import AddUpdateComp from "../components/AddUpdateComp";
 import UpdateDeleteSkeleton from "../components/Skeleton/UpdateDeleteSkeleton";
 import "../styles/UpdateDelete.css";
+import { loadFromLocalStorage } from "../utils/localStorageUtil";
 
 const UpdateDelete = () => {
   const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedCar, setSelectedCar] = useState(null);
   const [open, setOpen] = useState(false);
   const [carToUpdate, setCarToUpdate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,11 +32,14 @@ const UpdateDelete = () => {
   useEffect(() => {
     const existingData = loadFromLocalStorage("carData") || [];
     setCars(existingData);
-    const timer = setTimeout(() => {
-      setLoading(false); // Set loading to false after data is loaded
-    }, 1000);
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSidebarToggle = (car) => {
+    setSelectedCar(car);
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   const handleUpdate = (car) => {
     setCarToUpdate(car);
@@ -78,17 +81,11 @@ const UpdateDelete = () => {
     return carName.includes(searchQuery.toLowerCase());
   });
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
+  const handleSearchChange = (event) => setSearchQuery(event.target.value);
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
   return (
     <Container maxWidth="lg" style={{ padding: "20px" }}>
-      {/* Search Field */}
       <TextField
         label="Search by Name or Company"
         variant="outlined"
@@ -98,14 +95,12 @@ const UpdateDelete = () => {
         onChange={handleSearchChange}
       />
 
-      {/* Conditional Message for No Results */}
       {filteredCars.length === 0 && searchQuery && (
         <Typography variant="h6" color="error" align="center">
           Data not found
         </Typography>
       )}
 
-      {/* Grid to display car cards or skeletons */}
       <Grid container spacing={2}>
         {loading
           ? Array.from(new Array(8)).map((_, index) => (
@@ -119,12 +114,12 @@ const UpdateDelete = () => {
                   car={car}
                   onUpdate={handleUpdate}
                   onDelete={handleDelete}
+                  toggleSidebar={() => handleSidebarToggle(car)}
                 />
               </Grid>
             ))}
       </Grid>
 
-      {/* Modal for updating car details */}
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent>
           {carToUpdate && (
@@ -141,7 +136,6 @@ const UpdateDelete = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Snackbar for success messages */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={4500}
@@ -156,6 +150,44 @@ const UpdateDelete = () => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+
+      {/* Sidebar Component */}
+      <Sidebar
+        title={
+          selectedCar
+            ? `${selectedCar.brand} ${selectedCar.model}`
+            : "Car Details"
+        }
+        isOpen={isSidebarOpen}
+        toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        closeSidebar={() => setIsSidebarOpen(false)}
+        customStyles={{ width: "250px", backgroundColor: "black" }}
+        links={[]}
+        dropdowns={[]}
+        customCloseButtonStyles={{ color: "white" }}
+        content={
+          selectedCar && (
+            <div style={{ padding: "20px", color: "white" }}>
+              <img
+                src={selectedCar.image}
+                alt={`${selectedCar.brand} ${selectedCar.model}`}
+                style={{
+                  width: "100%",
+                  borderRadius: "8px",
+                  marginBottom: "15px",
+                }}
+              />
+              <p style={{ color: "white" }}>Price: {selectedCar.price}</p>
+              <p style={{ color: "white" }}>Mileage: {selectedCar.mileage}</p>
+              <p style={{ color: "white" }}>Category: {selectedCar.category}</p>
+              <p style={{ color: "white" }}>Type: {selectedCar.type}</p>
+              <p style={{ color: "white" }}>Fuel Type: {selectedCar.fuelType}</p>
+              <p style={{ color: "white" }}>Transmission: {selectedCar.transmissionType}</p>
+              <p style={{ color: "white" }}>Rating: {selectedCar.rating}</p>
+            </div>
+          )
+        }
+      />
     </Container>
   );
 };
