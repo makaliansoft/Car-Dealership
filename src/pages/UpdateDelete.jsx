@@ -10,13 +10,21 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Select,
+  MenuItem,
+  Checkbox,
+  ListItemText,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import Sidebar from "../components/Sidebar/SideBar";
 import UpdateDeleteComp from "../components/UpdateDeleteComp/UpdateDeleteComp";
-import AddUpdateComp from "../components/AddUpdateComp";
 import UpdateDeleteSkeleton from "../components/Skeleton/UpdateDeleteSkeleton";
 import "../styles/UpdateDelete.css";
-import { loadFromLocalStorage } from "../utils/localStorageUtil";
+import {
+  loadFromLocalStorage,
+  saveToLocalStorage,
+} from "../utils/localStorageUtil";
 
 const UpdateDelete = () => {
   const [cars, setCars] = useState([]);
@@ -26,6 +34,7 @@ const UpdateDelete = () => {
   const [open, setOpen] = useState(false);
   const [carToUpdate, setCarToUpdate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -76,24 +85,67 @@ const UpdateDelete = () => {
     setCarToUpdate(null);
   };
 
+  const handleCategoryChange = (event) => {
+    const value = event.target.value;
+    setSelectedCategories(value);
+  };
+
   const filteredCars = cars.filter((car) => {
     const carName = `${car.brand} ${car.model}`.toLowerCase();
-    return carName.includes(searchQuery.toLowerCase());
+    const matchesSearch = carName.includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(car.category);
+    return matchesSearch && matchesCategory;
   });
 
   const handleSearchChange = (event) => setSearchQuery(event.target.value);
   const handleSnackbarClose = () => setSnackbarOpen(false);
 
+  // Function to get unique categories from the cars data
+  const getUniqueCategories = () => {
+    const categories = cars.map((car) => car.category);
+    return [...new Set(categories)]; // Using Set to get unique categories
+  };
+
+  const uniqueCategories = getUniqueCategories();
+
   return (
     <Container maxWidth="lg" style={{ padding: "20px" }}>
-      <TextField
-        label="Search by Name or Company"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={searchQuery}
-        onChange={handleSearchChange}
-      />
+      <Grid container spacing={2} alignItems="center">
+        {/* Search Field */}
+        <Grid item xs={8}>
+          <TextField
+            label="Search by Name or Company"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
+        </Grid>
+
+        {/* Category Filter Dropdown */}
+        <Grid item xs={4}>
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel>Category</InputLabel>
+            <Select
+              multiple
+              value={selectedCategories}
+              onChange={handleCategoryChange}
+              renderValue={(selected) => selected.join(", ")}
+              label="Category"
+            >
+              {uniqueCategories.map((category) => (
+                <MenuItem key={category} value={category}>
+                  <Checkbox checked={selectedCategories.includes(category)} />
+                  <ListItemText primary={category} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
 
       {filteredCars.length === 0 && searchQuery && (
         <Typography variant="h6" color="error" align="center">
@@ -120,6 +172,7 @@ const UpdateDelete = () => {
             ))}
       </Grid>
 
+      {/* Dialog for Car Update */}
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent>
           {carToUpdate && (
@@ -136,6 +189,7 @@ const UpdateDelete = () => {
         </DialogActions>
       </Dialog>
 
+      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={4500}
@@ -181,8 +235,12 @@ const UpdateDelete = () => {
               <p style={{ color: "white" }}>Mileage: {selectedCar.mileage}</p>
               <p style={{ color: "white" }}>Category: {selectedCar.category}</p>
               <p style={{ color: "white" }}>Type: {selectedCar.type}</p>
-              <p style={{ color: "white" }}>Fuel Type: {selectedCar.fuelType}</p>
-              <p style={{ color: "white" }}>Transmission: {selectedCar.transmissionType}</p>
+              <p style={{ color: "white" }}>
+                Fuel Type: {selectedCar.fuelType}
+              </p>
+              <p style={{ color: "white" }}>
+                Transmission: {selectedCar.transmissionType}
+              </p>
               <p style={{ color: "white" }}>Rating: {selectedCar.rating}</p>
             </div>
           )

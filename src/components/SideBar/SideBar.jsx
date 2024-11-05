@@ -12,15 +12,14 @@ const Sidebar = ({
   customCloseButtonStyles,
   isOpen,
   toggleSidebar,
-  closeSidebar,
-  content, // New prop for additional data or custom content
+  closeSidebar, 
 }) => {
   const sidebarRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        closeSidebar();
+        closeSidebar(); // Use closeSidebar from props
       }
     };
 
@@ -41,7 +40,7 @@ const Sidebar = ({
 
         <button
           className="close-button"
-          onClick={closeSidebar}
+          onClick={closeSidebar} // Use closeSidebar to close
           style={customCloseButtonStyles}
         >
           &times;
@@ -72,14 +71,11 @@ const Sidebar = ({
             />
           ))}
         </nav>
-
-        {/* Render additional content if provided */}
-        {content && <div className="sidebar-content">{content}</div>}
       </div>
 
       {!isOpen && (
         <button onClick={toggleSidebar} className="toggle-button">
-          Admin Menu &#9776;
+          Admin Menu &#9776; 
         </button>
       )}
     </div>
